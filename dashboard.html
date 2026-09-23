@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Kandy Services CMS</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="data.js"></script>
+</head>
+<body class="dashboard-body">
+
+    <div id="dash-login-screen" class="dash-login-screen">
+        <form id="form-login" class="dash-login-form">
+            <span class="logo-text">KANDY<span class="accent-dot">.</span></span>
+            <h1>Admin Login</h1>
+            <p class="dash-hint">Sign in with your admin account to manage the site.</p>
+            <label for="login-email">Email</label>
+            <input type="email" id="login-email" required autocomplete="username">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" required autocomplete="current-password">
+            <p id="login-error" class="dash-login-error" hidden></p>
+            <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+        </form>
+    </div>
+
+    <div id="dash-shell" class="dash-shell" style="display:none;">
+        <!-- Sidebar -->
+        <aside class="dash-sidebar">
+            <a href="index.html" class="logo-link dash-logo">
+                <span class="logo-text">KANDY<span class="accent-dot">.</span></span>
+            </a>
+            <span class="dash-subtitle">Admin Dashboard</span>
+
+            <nav class="dash-nav">
+                <button class="dash-nav-item active" data-panel="profile"><i class="fa-solid fa-user-astronaut"></i> Profile & Hero</button>
+                <button class="dash-nav-item" data-panel="about"><i class="fa-solid fa-circle-info"></i> About & Metrics</button>
+                <button class="dash-nav-item" data-panel="skills"><i class="fa-solid fa-microchip"></i> Skills</button>
+                <button class="dash-nav-item" data-panel="services"><i class="fa-solid fa-server"></i> Services</button>
+                <button class="dash-nav-item" data-panel="projects"><i class="fa-solid fa-diagram-project"></i> Projects</button>
+                <button class="dash-nav-item" data-panel="companies"><i class="fa-solid fa-building"></i> Companies</button>
+                <button class="dash-nav-item" data-panel="blog"><i class="fa-solid fa-newspaper"></i> Tech Hub / Blog</button>
+                <button class="dash-nav-item" data-panel="testimonials"><i class="fa-solid fa-quote-left"></i> Testimonials</button>
+                <button class="dash-nav-item" data-panel="tickets"><i class="fa-solid fa-headset"></i> Help Desk</button>
+                <button class="dash-nav-item" data-panel="stats"><i class="fa-solid fa-chart-line"></i> Business Stats</button>
+                <button class="dash-nav-item" data-panel="portfolio"><i class="fa-solid fa-briefcase"></i> Portfolio Link</button>
+                <button class="dash-nav-item" data-panel="social"><i class="fa-solid fa-share-nodes"></i> Social Links</button>
+                <button class="dash-nav-item" data-panel="contact"><i class="fa-solid fa-address-card"></i> Contact Info</button>
+                <button class="dash-nav-item" data-panel="settings"><i class="fa-solid fa-gear"></i> Settings</button>
+            </nav>
+
+            <a href="index.html" class="btn btn-secondary btn-full dash-view-site" target="_blank" rel="noopener">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> View Live Site
+            </a>
+            <button id="btn-logout" class="btn text-danger dash-logout-btn" type="button">
+                <i class="fa-solid fa-right-from-bracket"></i> Log Out
+            </button>
+        </aside>
+
+        <!-- Main -->
+        <main class="dash-main">
+            <header class="dash-topbar">
+                <div>
+                    <h1 id="dash-panel-title">Profile & Hero</h1>
+                    <p id="dash-panel-desc" class="dash-panel-desc">Edit your name, headline roles, hero copy, and profile photo.</p>
+                </div>
+                <button id="dash-theme-toggle" class="nav-btn-icon" aria-label="Toggle Theme" title="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </header>
+
+            <div id="dash-save-toast" class="dash-toast" aria-live="polite"></div>
+
+            <!-- ===================== PROFILE & HERO ===================== -->
+            <section class="dash-panel active" id="panel-profile">
+                <form id="form-profile" class="dash-form glass-card">
+                    <div class="dash-image-field">
+                        <label>Profile Photo</label>
+                        <div class="dash-image-uploader" data-uploader="profile-avatar">
+                            <div class="dash-image-preview" id="preview-profile-avatar"><i class="fa-solid fa-robot"></i></div>
+                            <div class="dash-uploader-actions">
+                                <label class="btn btn-secondary btn-small dash-upload-btn">
+                                    <i class="fa-solid fa-upload"></i> Upload Photo
+                                    <input type="file" accept="image/*" data-image-input="profile-avatar" hidden>
+                                </label>
+                                <button type="button" class="btn-text-danger" data-image-clear="profile-avatar">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Full Name</label><input type="text" id="pf-name" required></div>
+                        <div class="form-group"><label>Status Badge Text</label><input type="text" id="pf-badge" required></div>
+                    </div>
+                    <div class="form-group"><label>Typing Roles (comma separated)</label><input type="text" id="pf-roles" placeholder="IT Professional, Front-End Developer, AI Specialist" required></div>
+                    <div class="form-group"><label>Hero Lead Paragraph</label><textarea id="pf-lead" rows="3" required></textarea></div>
+                    <label class="dash-checkbox-label"><input type="checkbox" id="pf-available" checked> Currently available (shows "Online" in the hero chat widget; unchecked shows "Away")</label>
+                    <button type="submit" class="btn btn-primary btn-small"><i class="fa-solid fa-floppy-disk"></i> Save Profile & Hero</button>
+                </form>
+            </section>
+
+            <!-- ===================== ABOUT & METRICS ===================== -->
+            <section class="dash-panel" id="panel-about">
+                <form id="form-about" class="dash-form glass-card">
+                    <div class="form-group"><label>Biography — Paragraph 1</label><textarea id="ab-bio1" rows="3" required></textarea></div>
+                    <div class="form-group"><label>Biography — Paragraph 2</label><textarea id="ab-bio2" rows="3" required></textarea></div>
+                    <div class="form-group"><label>Philosophy Quote</label><textarea id="ab-quote" rows="2" required></textarea></div>
+                    <button type="submit" class="btn btn-primary btn-small"><i class="fa-solid fa-floppy-disk"></i> Save About</button>
+                </form>
+
+                <div class="dash-section-block">
+                    <h3>Impact Metrics</h3>
+                    <p class="dash-hint">Shown as animated counters on the About section.</p>
+                    <div id="metrics-editor-list" class="dash-metrics-grid"></div>
+                    <button type="button" id="btn-add-metric" class="btn btn-secondary btn-small"><i class="fa-solid fa-plus"></i> Add Metric</button>
+                    <button type="button" id="btn-save-metrics" class="btn btn-primary btn-small"><i class="fa-solid fa-floppy-disk"></i> Save Metrics</button>
+                </div>
+            </section>
+
+            <!-- ===================== SKILLS ===================== -->
+            <section class="dash-panel" id="panel-skills">
+                <form id="form-skill" class="dash-form glass-card dash-inline-form">
+                    <h3>Add Skill</h3>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Skill Name</label><input type="text" id="sk-name" placeholder="Figma" required></div>
+                        <div class="form-group"><label>Font Awesome Icon Class</label><input type="text" id="sk-icon" placeholder="fa-brands fa-figma" required></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-small">Add Skill</button>
+                </form>
+                <div class="dash-list" id="list-skills"></div>
+            </section>
+
+            <!-- ===================== SERVICES ===================== -->
+            <section class="dash-panel" id="panel-services">
+                <form id="form-service" class="dash-form glass-card dash-inline-form">
+                    <h3 id="service-form-heading">Add Service</h3>
+                    <input type="hidden" id="sv-edit-index" value="">
+                    <div class="dash-image-field">
+                        <label>Service Image (optional)</label>
+                        <div class="dash-image-uploader" data-uploader="service-image">
+                            <div class="dash-image-preview dash-image-preview-wide" id="preview-service-image"><i class="fa-solid fa-image"></i></div>
+                            <div class="dash-uploader-actions">
+                                <label class="btn btn-secondary btn-small dash-upload-btn">
+                                    <i class="fa-solid fa-upload"></i> Upload Image
+                                    <input type="file" accept="image/*" data-image-input="service-image" hidden>
+                                </label>
+                                <button type="button" class="btn-text-danger" data-image-clear="service-image">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Service Name</label><input type="text" id="sv-name" required></div>
+                        <div class="form-group"><label>Font Awesome Icon Class</label><input type="text" id="sv-icon" placeholder="fa-solid fa-code" required></div>
+                        <div class="form-group"><label>Price Point</label><input type="text" id="sv-price" placeholder="From $499" required></div>
+                    </div>
+                    <div class="form-group"><label>Key Benefit Description</label><textarea id="sv-desc" rows="3" required></textarea></div>
+                    <div class="dash-form-actions">
+                        <button type="submit" class="btn btn-primary btn-small">Save Service</button>
+                        <button type="button" id="sv-cancel-edit" class="btn btn-secondary btn-small" hidden>Cancel Edit</button>
+                    </div>
+                </form>
+                <div class="dash-list" id="list-services"></div>
+            </section>
+
+            <!-- ===================== PROJECTS ===================== -->
+            <section class="dash-panel" id="panel-projects">
+                <form id="form-project" class="dash-form glass-card dash-inline-form">
+                    <h3 id="project-form-heading">Add Project</h3>
+                    <input type="hidden" id="pj-edit-index" value="">
+                    <div class="dash-image-field">
+                        <label>Project Image (optional)</label>
+                        <div class="dash-image-uploader" data-uploader="project-image">
+                            <div class="dash-image-preview dash-image-preview-wide" id="preview-project-image"><i class="fa-solid fa-image"></i></div>
+                            <div class="dash-uploader-actions">
+                                <label class="btn btn-secondary btn-small dash-upload-btn">
+                                    <i class="fa-solid fa-upload"></i> Upload Image
+                                    <input type="file" accept="image/*" data-image-input="project-image" hidden>
+                                </label>
+                                <button type="button" class="btn-text-danger" data-image-clear="project-image">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Title</label><input type="text" id="pj-title" required></div>
+                        <div class="form-group"><label>Category</label>
+                            <select id="pj-cat">
+                                <option value="web">Web Architectures</option>
+                                <option value="ai">AI & Automation</option>
+                                <option value="it">IT Systems</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Tech Stack (comma separated)</label><input type="text" id="pj-tech" placeholder="React, Three.js, GSAP" required></div>
+                        <div class="form-group"><label>Client / Organization</label><input type="text" id="pj-client" required></div>
+                        <div class="form-group"><label>GitHub URL</label><input type="url" id="pj-git"></div>
+                    </div>
+                    <div class="form-group"><label>Description</label><textarea id="pj-desc" rows="3" required></textarea></div>
+                    <div class="dash-form-actions">
+                        <button type="submit" class="btn btn-primary btn-small">Save Project</button>
+                        <button type="button" id="pj-cancel-edit" class="btn btn-secondary btn-small" hidden>Cancel Edit</button>
+                    </div>
+                </form>
+                <div class="dash-list" id="list-projects"></div>
+            </section>
+
+            <!-- ===================== COMPANIES ===================== -->
+            <section class="dash-panel" id="panel-companies">
+                <form id="form-company" class="dash-form glass-card dash-inline-form">
+                    <h3 id="company-form-heading">Add Company</h3>
+                    <input type="hidden" id="co-edit-index" value="">
+                    <div class="dash-image-field">
+                        <label>Business Logo (optional — falls back to icon)</label>
+                        <div class="dash-image-uploader" data-uploader="company-logo">
+                            <div class="dash-image-preview" id="preview-company-logo"><i class="fa-solid fa-building"></i></div>
+                            <div class="dash-uploader-actions">
+                                <label class="btn btn-secondary btn-small dash-upload-btn">
+                                    <i class="fa-solid fa-upload"></i> Upload Logo
+                                    <input type="file" accept="image/*" data-image-input="company-logo" hidden>
+                                </label>
+                                <button type="button" class="btn-text-danger" data-image-clear="company-logo">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Company Name</label><input type="text" id="co-name" required></div>
+                        <div class="form-group"><label>Fallback Icon Class</label><input type="text" id="co-icon" placeholder="fa-solid fa-building"></div>
+                        <div class="form-group"><label>Your Role</label><input type="text" id="co-role" placeholder="Co-Founder" required></div>
+                        <div class="form-group"><label>CTA Button Text</label><input type="text" id="co-cta-text" placeholder="Learn More" required></div>
+                        <div class="form-group"><label>CTA Link</label><input type="text" id="co-cta-link" placeholder="tel:0542826112 or #contact" required></div>
+                    </div>
+                    <div class="form-group"><label>Description</label><textarea id="co-desc" rows="3" required></textarea></div>
+                    <div class="form-group"><label>Highlights (one per line)</label><textarea id="co-highlights" rows="3" placeholder="Enterprise IT Maintenance & Setup&#10;Automated Web Applications"></textarea></div>
+                    <div class="dash-form-actions">
+                        <button type="submit" class="btn btn-primary btn-small">Save Company</button>
+                        <button type="button" id="co-cancel-edit" class="btn btn-secondary btn-small" hidden>Cancel Edit</button>
+                    </div>
+                </form>
+                <div class="dash-list" id="list-companies"></div>
+            </section>
+
+            <!-- ===================== BLOG ===================== -->
+            <section class="dash-panel" id="panel-blog">
+                <div class="dash-form glass-card dash-inline-form">
+                    <h3>Categories</h3>
+                    <p class="dash-hint">Add categories once, then assign them to posts below.</p>
+                    <div class="dash-form-actions">
+                        <input type="text" id="bl-new-category" placeholder="e.g. AI, Frontend, Career" style="flex:1;">
+                        <button type="button" id="bl-add-category" class="btn btn-secondary btn-small">Add Category</button>
+                    </div>
+                    <div class="dash-list" id="list-blog-categories" style="margin-top:12px;"></div>
+                </div>
+
+                <form id="form-blog" class="dash-form glass-card dash-inline-form">
+                    <h3 id="blog-form-heading">Write Article</h3>
+                    <input type="hidden" id="bl-edit-id" value="">
+                    <div class="dash-image-field">
+                        <label>Featured Image (optional)</label>
+                        <div class="dash-image-uploader" data-uploader="blog-image">
+                            <div class="dash-image-preview dash-image-preview-wide" id="preview-blog-image"><i class="fa-solid fa-image"></i></div>
+                            <div class="dash-uploader-actions">
+                                <label class="btn btn-secondary btn-small dash-upload-btn">
+                                    <i class="fa-solid fa-upload"></i> Upload Image
+                                    <input type="file" accept="image/*" data-image-input="blog-image" hidden>
+                                </label>
+                                <button type="button" class="btn-text-danger" data-image-clear="blog-image">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Article Title</label><input type="text" id="bl-title" required></div>
+                        <div class="form-group"><label>Category</label>
+                            <select id="bl-category"><option value="">No category</option></select>
+                        </div>
+                        <div class="form-group"><label>Tags (comma-separated)</label><input type="text" id="bl-tags" placeholder="prompt-engineering, ai"></div>
+                    </div>
+                    <div class="form-group"><label>Excerpt</label><textarea id="bl-excerpt" rows="2" required placeholder="Short summary shown on the listing card"></textarea></div>
+                    <div class="form-group"><label>Full Article Content</label><textarea id="bl-content" rows="10" required placeholder="Write the full article here. Plain text or basic HTML."></textarea></div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Meta Description (SEO, optional)</label><input type="text" id="bl-meta-desc"></div>
+                        <div class="form-group"><label>Status</label>
+                            <select id="bl-status">
+                                <option value="draft">Draft</option>
+                                <option value="published">Published</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="dash-form-actions">
+                        <button type="submit" class="btn btn-primary btn-small">Save Article</button>
+                        <button type="button" id="bl-cancel-edit" class="btn btn-secondary btn-small" hidden>Cancel Edit</button>
+                    </div>
+                </form>
+                <div class="dash-list" id="list-blogs"></div>
+            </section>
+
+            <!-- ===================== TESTIMONIALS ===================== -->
+            <section class="dash-panel" id="panel-testimonials">
+                <form id="form-testimonial" class="dash-form glass-card dash-inline-form">
+                    <h3 id="testimonial-form-heading">Add Testimonial</h3>
+                    <input type="hidden" id="te-edit-id" value="">
+                    <div class="dash-image-field">
+                        <label>Client Photo (optional)</label>
+                        <div class="dash-image-uploader" data-uploader="testimonial-photo">
+                            <div class="dash-image-preview" id="preview-testimonial-photo"><i class="fa-solid fa-user"></i></div>
+                            <div class="dash-uploader-actions">
+                                <label class="btn btn-secondary btn-small dash-upload-btn">
+                                    <i class="fa-solid fa-upload"></i> Upload Photo
+                                    <input type="file" accept="image/*" data-image-input="testimonial-photo" hidden>
+                                </label>
+                                <button type="button" class="btn-text-danger" data-image-clear="testimonial-photo">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Client Name</label><input type="text" id="te-name" required></div>
+                        <div class="form-group"><label>Client Info</label><input type="text" id="te-info" placeholder="Founder, Company Name"></div>
+                    </div>
+                    <div class="form-group"><label>Testimonial</label><textarea id="te-text" rows="3" required></textarea></div>
+                    <label class="dash-checkbox-label"><input type="checkbox" id="te-published"> Published (visible on the live site)</label>
+                    <div class="dash-form-actions">
+                        <button type="submit" class="btn btn-primary btn-small">Save Testimonial</button>
+                        <button type="button" id="te-cancel-edit" class="btn btn-secondary btn-small" hidden>Cancel Edit</button>
+                    </div>
+                </form>
+                <div class="dash-list" id="list-testimonials"></div>
+            </section>
+
+            <!-- ===================== HELP DESK ===================== -->
+            <section class="dash-panel" id="panel-tickets">
+                <div id="ticket-list-view">
+                    <div class="dash-form-actions" style="margin-bottom:1.25rem;">
+                        <select id="tk-filter-status">
+                            <option value="">All statuses</option>
+                            <option value="new">New</option>
+                            <option value="open">Open</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="waiting_on_customer">Waiting on Customer</option>
+                            <option value="resolved">Resolved</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                        <input type="text" id="tk-search" placeholder="Search subject, email, or reference…" style="flex:1;">
+                    </div>
+                    <div class="dash-list" id="list-tickets"></div>
+                </div>
+                <div id="ticket-detail-view" hidden>
+                    <button type="button" id="tk-back-to-list" class="btn btn-secondary btn-small" style="margin-bottom:1rem;"><i class="fa-solid fa-arrow-left"></i> Back to all tickets</button>
+                    <div class="dash-section-block" id="ticket-detail-content"></div>
+                </div>
+            </section>
+
+            <!-- ===================== BUSINESS STATS ===================== -->
+            <section class="dash-panel" id="panel-stats">
+                <form id="form-stats" class="dash-form glass-card dash-inline-form">
+                    <h3>Business Activity</h3>
+                    <p class="dash-hint">Leave a field blank to hide that counter on the live site rather than show a fabricated number.</p>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Websites Developed</label><input type="number" id="st-websites" min="0"></div>
+                        <div class="form-group"><label>Laptops Sold</label><input type="number" id="st-laptops" min="0"></div>
+                    </div>
+                    <div class="dash-form-actions">
+                        <button type="submit" class="btn btn-primary btn-small">Save Stats</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- ===================== PORTFOLIO LINK ===================== -->
+            <section class="dash-panel" id="panel-portfolio">
+                <form id="form-portfolio" class="dash-form glass-card dash-inline-form">
+                    <h3>Portfolio Link</h3>
+                    <p class="dash-hint">Points visitors to your separate portfolio site. Leave the URL blank to hide this section.</p>
+                    <div class="form-group"><label>Portfolio URL</label><input type="url" id="pf-portfolio-url" placeholder="https://..."></div>
+                    <div class="form-group"><label>Button Label</label><input type="text" id="pf-portfolio-label" placeholder="View my full portfolio"></div>
+                    <div class="dash-form-actions">
+                        <button type="submit" class="btn btn-primary btn-small">Save</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- ===================== SOCIAL LINKS ===================== -->
+            <section class="dash-panel" id="panel-social">
+                <form id="form-social" class="dash-form glass-card dash-inline-form">
+                    <h3>Add Social Link</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Platform</label>
+                            <select id="so-platform"></select>
+                        </div>
+                        <div class="form-group"><label>Profile URL</label><input type="url" id="so-url" placeholder="https://..." required></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-small">Add Social Link</button>
+                </form>
+                <p class="dash-hint">These render as real brand icons in the footer, contact section, and anywhere else on the site marked to show socials.</p>
+                <div class="dash-list" id="list-social"></div>
+            </section>
+
+            <!-- ===================== CONTACT INFO ===================== -->
+            <section class="dash-panel" id="panel-contact">
+                <form id="form-contact" class="dash-form glass-card">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Personal Phone</label><input type="tel" id="ct-personal" required></div>
+                        <div class="form-group"><label>Business Phone</label><input type="tel" id="ct-business" required></div>
+                        <div class="form-group"><label>Email Address</label><input type="email" id="ct-email" required></div>
+                        <div class="form-group"><label>WhatsApp Number (intl format, no +)</label><input type="text" id="ct-whatsapp" placeholder="233542826112" required></div>
+                    </div>
+                    <div class="form-group"><label>Default WhatsApp Message</label><input type="text" id="ct-wa-message"></div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Monday – Friday Hours</label><input type="text" id="ct-hours-weekday"></div>
+                        <div class="form-group"><label>Saturday Hours</label><input type="text" id="ct-hours-saturday"></div>
+                        <div class="form-group"><label>Sunday Hours</label><input type="text" id="ct-hours-sunday"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-small"><i class="fa-solid fa-floppy-disk"></i> Save Contact Info</button>
+                </form>
+            </section>
+
+            <!-- ===================== SETTINGS ===================== -->
+            <section class="dash-panel" id="panel-settings">
+                <div class="dash-form glass-card">
+                    <h3>Account</h3>
+                    <p class="dash-hint">Signed in as <strong id="settings-admin-email">—</strong>. Content is stored in Supabase, so edits here appear for every visitor immediately, on any device.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Confirm Dialog (reused for deletes & reset) -->
+    <div id="confirm-modal" class="modal-overlay" aria-hidden="true" role="dialog">
+        <div class="modal-content glass-card dash-confirm-content">
+            <p id="confirm-modal-text">Are you sure?</p>
+            <div class="dash-form-actions">
+                <button id="confirm-modal-yes" class="btn btn-primary btn-small dash-danger-btn">Yes, Continue</button>
+                <button id="confirm-modal-no" class="btn btn-secondary btn-small">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

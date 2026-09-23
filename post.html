@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="post-page-title">Article | Kandy Services</title>
+    <meta name="description" id="post-meta-description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:title" id="post-og-title" content="">
+    <meta property="og:description" id="post-og-description" content="">
+    <meta property="og:image" id="post-og-image" content="">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="data.js"></script>
+
+    <style>
+        .post-article-wrap { max-width: 780px; margin: 0 auto; padding: 8rem 1.5rem 6rem; }
+        .post-back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; margin-bottom: 2rem; font-family: var(--font-heading); font-size: 0.9rem; }
+        .post-back-link:hover { color: var(--primary); }
+        .post-article-meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+        .post-article-title { font-size: clamp(2rem, 4vw, 2.75rem); margin-bottom: 1.5rem; }
+        .post-article-image { width: 100%; border-radius: var(--radius-premium); margin-bottom: 2rem; }
+        .post-article-body { color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; white-space: pre-wrap; }
+        .post-article-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 2rem; }
+        .post-tag-pill { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--radius-circular); padding: 6px 14px; font-size: 0.8rem; color: var(--text-secondary); }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo-link" aria-label="Kandy Services Home">
+                <span class="logo-text">KANDY<span class="accent-dot">.</span></span>
+            </a>
+            <div class="nav-actions">
+                <button id="theme-toggle" class="nav-btn-icon" aria-label="Toggle Theme" title="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="post-article-wrap" id="post-content">
+            <a href="index.html#tech-hub" class="post-back-link"><i class="fa-solid fa-arrow-left"></i> Back to Tech Hub</a>
+            <p>Loading article…</p>
+        </div>
+    </main>
+
+    <script src="post.js"></script>
+</body>
+</html>
