@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kandy Services | IT Solutions, Web Development & Tech Consulting</title>
+    
+    <!-- Primary SEO Metadata -->
+    <meta name="description" content="Kandy Services — full-service IT operations, front-end development, and AI strategy consulting for businesses and individuals.">
+    <meta name="keywords" content="Kandy Services, IT Support, Web Development, AI Consulting, Tech Consultancy, Ghana IT Company">
+    <meta name="author" content="Kandy Services">
+    <link rel="canonical" href="https://andrewakuayi.com">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://andrewakuayi.com">
+    <meta property="og:title" content="Kandy Services | IT Solutions & Tech Consulting">
+    <meta property="og:description" content="Full-service IT operations, front-end development, AI strategy consulting, and technology support from Kandy Services.">
+    <meta property="og:image" content="https://andrewakuayi.com/assets/images/og-preview.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://andrewakuayi.com">
+    <meta property="twitter:title" content="Kandy Services | IT Solutions & Tech Consulting">
+    <meta property="twitter:description" content="Explore IT services, AI consultations, and UI/UX design from Kandy Services.">
+    <meta property="twitter:image" content="https://andrewakuayi.com/assets/images/og-preview.png">
+
+    <!-- CDN Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="data.js"></script>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Kandy Services",
+      "url": "https://andrewakuayi.com",
+      "logo": "https://andrewakuayi.com/assets/logos/kandy-logo.png",
+      "image": "https://andrewakuayi.com/assets/images/og-preview.png",
+      "description": "Premium IT and Front-End Development agency offering tech consultancy, AI integration, and virtual assistance.",
+      "telephone": "+233542826112",
+      "email": "kandyservices5@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "GH"
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Andrew Akuayi Junior"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loader" class="loader-container" aria-hidden="true">
+        <div class="loader-content">
+            <div class="brand-mark-container">
+                <div class="brand-mark">K</div>
+            </div>
+            <div class="loading-bar-wrapper">
+                <div class="loading-bar"></div>
+            </div>
+            <div class="loading-status">
+                <span class="status-text">Loading Kandy Services</span>
+                <span id="load-percentage">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="custom-cursor"></div>
+    <div class="custom-cursor-glow" id="cursor-glow"></div>
+
+    <!-- Background Canvas -->
+    <canvas id="three-bg-canvas"></canvas>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="nav-container">
+            <a href="#home" class="logo-link" aria-label="Kandy Services Home">
+                <span class="logo-text">KANDY<span class="accent-dot">.</span></span>
+            </a>
+            
+            <nav class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-item active">Home</a></li>
+                    <li><a href="#about" class="nav-item">About</a></li>
+                    <li><a href="#skills" class="nav-item">Skills</a></li>
+                    <li><a href="#services" class="nav-item">Services</a></li>
+                    <li><a href="#projects" class="nav-item">Projects</a></li>
+                    <li><a href="#companies" class="nav-item">Companies</a></li>
+                    <li><a href="#tech-hub" class="nav-item">Tech Hub</a></li>
+                    <li><a href="#testimonials" class="nav-item">Testimonials</a></li>
+                    <li><a href="#help-desk" class="nav-item">Help Desk</a></li>
+                    <li><a href="#contact" class="nav-item">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <button id="theme-toggle" class="nav-btn-icon" aria-label="Toggle Theme" title="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="nav-btn-cta magnetic" onclick="window.location.href='#contact'">Get a Quote</button>
+                <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+        <div class="nav-progress" id="nav-progress"></div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="hero-grid container">
+                <div class="hero-content">
+                    <div class="status-badge">
+                        <span class="badge-dot"></span>
+                        <span class="badge-text" id="hero-badge-text">Available for Global Consultations</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Kandy<span class="gradient-text"> Services</span>
+                    </h1>
+                    <div class="typing-container">
+                        <span class="typing-static">We specialize in</span>
+                        <span class="typing-dynamic" id="typing-text"></span>
+                        <span class="typing-cursor">|</span>
+                    </div>
+                    <p class="hero-lead" id="hero-lead">
+                        Full-service IT operations, front-end development, and AI strategy consulting — built to move your business faster.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn btn-primary magnetic"><i class="fa-solid fa-cube"></i> View Our Work</a>
+                        <a href="#contact" class="btn btn-secondary magnetic"><i class="fa-solid fa-calendar-days"></i> Book Consultation</a>
+                    </div>
+                </div>
+
+                <div class="hero-media">
+                    <div class="avatar-card-wrapper">
+                        <div class="avatar-card">
+                            <div class="glass-glare"></div>
+                            <div class="avatar-frame">
+                                <div class="chat-window-full">
+                                    <div class="chat-window-header">
+                                        <div class="chat-window-avatar" id="chat-window-avatar"><i class="fa-solid fa-building"></i></div>
+                                        <div class="chat-header-info">
+                                            <span class="chat-widget-name">Kandy Services</span>
+                                            <span class="chat-widget-status-row"><span class="chat-widget-dot"></span><span class="chat-widget-status">Online</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="chat-window-body" id="chat-widget-body"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span class="mouse-icon">
+                    <span class="wheel"></span>
+                </span>
+                <span class="scroll-text">Scroll to Explore</span>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section container">
+            <div class="section-header">
+                <span class="sub-title">About Us</span>
+                <h2 class="section-title">Our Mission</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-text-column">
+                    <p class="paragraph-large" id="about-bio-1">
+                        We architect scalable digital solutions that balance elegant visual interfaces with robust automation workflows. Our team targets high-velocity growth for businesses of all sizes.
+                    </p>
+                    <p id="about-bio-2">
+                        With deep domain expertise in Modern Web Development, AI Integration, and IT Support Systems, we focus on frictionless digital operations. From individual websites to complete organizational infrastructure setups, we deliver structural excellence with micro-detailed execution.
+                    </p>
+                    <div class="philosophy-card">
+                        <i class="fa-solid fa-quote-left accent-text"></i>
+                        <p class="philosophy-quote" id="about-quote">"True technological evolution lies in abstracting absolute complexity into seamless, human-centered UI systems."</p>
+                    </div>
+                </div>
+                <div class="about-metrics-column" id="metrics-container">
+                    <div class="metric-card">
+                        <span class="metric-num" data-val="100">0</span><span class="metric-plus">+</span>
+                        <span class="metric-label">Projects Completed</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-num" data-val="5">0</span><span class="metric-plus">+</span>
+                        <span class="metric-label">Years of Experience</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-num" data-val="50">0</span><span class="metric-plus">+</span>
+                        <span class="metric-label">Clients Served</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-num" data-val="30">0</span><span class="metric-plus">+</span>
+                        <span class="metric-label">Technologies Mastered</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Core Section -->
+        <section id="skills" class="skills-section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="sub-title">Ecosystem</span>
+                    <h2 class="section-title">Technological Core</h2>
+                </div>
+                <div class="skills-core-container">
+                    <div class="skills-orbit-visual">
+                        <div class="center-core">
+                            <span class="core-glow"></span>
+                            <i class="fa-solid fa-microchip core-icon"></i>
+                        </div>
+                        <div class="orbit-path orbit-1"></div>
+                        <div class="orbit-path orbit-2"></div>
+                        <div class="orbit-path orbit-3"></div>
+                    </div>
+                    <div class="skills-grid-ui" id="skills-container">
+                        <!-- Rendered Dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services-section container">
+            <div class="section-header">
+                <span class="sub-title">Capabilities</span>
+                <h2 class="section-title">Specialized Services</h2>
+            </div>
+            <div class="services-grid" id="services-container-grid">
+                <!-- Services Populated Dynamically via JS or Admin Panel -->
+            </div>
+        </section>
+
+        <!-- Dynamic Projects Hub -->
+        <section id="projects" class="projects-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="sub-title">Portfolio</span>
+                    <h2 class="section-title">Product & Engineering Masterpieces</h2>
+                </div>
+                <div class="portfolio-controls">
+                    <div class="search-box-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="project-search" placeholder="Search tech stack, client, or keyword..." aria-label="Search Projects">
+                    </div>
+                    <div class="filter-tabs" id="project-filters">
+                        <button class="filter-btn active" data-filter="all">All Solutions</button>
+                        <button class="filter-btn" data-filter="web">Web Architectures</button>
+                        <button class="filter-btn" data-filter="ai">AI & Automation</button>
+                        <button class="filter-btn" data-filter="it">IT Systems</button>
+                    </div>
+                </div>
+                <div class="projects-display-grid" id="projects-target-grid">
+                    <!-- Dynamic Grid Injector -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Affiliated Ventures / Partners -->
+        <section id="companies" class="companies-section container">
+            <div class="section-header text-center">
+                <span class="sub-title">Partnerships</span>
+                <h2 class="section-title">Affiliated Ventures</h2>
+            </div>
+            <div class="companies-showcase-grid" id="companies-showcase-grid">
+                <!-- Rendered Dynamically from storage (script.js) -->
+            </div>
+        </section>
+
+        <!-- Business Activity -->
+        <section id="activity" class="activity-section container" hidden>
+            <div class="section-header text-center">
+                <span class="sub-title">Track Record</span>
+                <h2 class="section-title">Business Activity</h2>
+            </div>
+            <div class="activity-stats-grid" id="activity-stats-grid">
+                <!-- Rendered Dynamically (script.js) -->
+            </div>
+        </section>
+
+        <!-- Tech Hub (Blog) -->
+        <section id="tech-hub" class="tech-hub-section container">
+            <div class="section-header">
+                <span class="sub-title">Intelligence Feed</span>
+                <h2 class="section-title">Engineering Logs & Insights</h2>
+            </div>
+            <div class="tech-hub-grid" id="blog-posts-grid">
+                <!-- Dynamically Rendered Articles -->
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="testimonials-section container" hidden>
+            <div class="section-header text-center">
+                <span class="sub-title">Client Feedback</span>
+                <h2 class="section-title">What Clients Say</h2>
+            </div>
+            <div class="testimonials-grid" id="testimonials-grid">
+                <!-- Rendered Dynamically (script.js) -->
+            </div>
+        </section>
+
+        <!-- Portfolio Link -->
+        <section id="portfolio-link" class="portfolio-link-section container" hidden>
+            <div class="glass-card portfolio-link-card">
+                <div>
+                    <span class="sub-title">Full Portfolio</span>
+                    <h2 class="section-title">See the Complete Body of Work</h2>
+                </div>
+                <a href="#" id="portfolio-link-btn" target="_blank" rel="noopener" class="btn btn-primary magnetic">
+                    View Portfolio <i class="fa-solid fa-arrow-right-long"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Help Desk -->
+        <section id="help-desk" class="help-desk-section container">
+            <div class="section-header text-center">
+                <span class="sub-title">Support</span>
+                <h2 class="section-title">Help Desk</h2>
+                <p class="section-desc">Have an issue or a question about a project? Submit a ticket, or track one you already opened.</p>
+            </div>
+
+            <div class="help-desk-tabs">
+                <button type="button" class="help-desk-tab active" data-hd-tab="submit">Submit a Ticket</button>
+                <button type="button" class="help-desk-tab" data-hd-tab="track">Track a Ticket</button>
+            </div>
+
+            <div class="help-desk-panel active" id="hd-panel-submit">
+                <form id="form-submit-ticket" class="hd-form glass-card">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Your Name</label><input type="text" id="hd-name" required></div>
+                        <div class="form-group"><label>Your Email</label><input type="email" id="hd-email" required></div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Category</label>
+                            <select id="hd-category">
+                                <option value="general">General</option>
+                                <option value="technical">Technical Issue</option>
+                                <option value="billing">Billing</option>
+                                <option value="project">Project Inquiry</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Priority</label>
+                            <select id="hd-priority">
+                                <option value="low">Low</option>
+                                <option value="normal" selected>Normal</option>
+                                <option value="high">High</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group"><label>Subject</label><input type="text" id="hd-subject" required></div>
+                    <div class="form-group"><label>Description</label><textarea id="hd-description" rows="4" required></textarea></div>
+                    <button type="submit" class="btn btn-primary magnetic">Submit Ticket</button>
+                    <div id="hd-submit-result" class="hd-result" hidden></div>
+                </form>
+            </div>
+
+            <div class="help-desk-panel" id="hd-panel-track">
+                <form id="form-track-ticket" class="hd-form glass-card">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Ticket Reference</label><input type="text" id="hd-track-reference" placeholder="TCK-1001" required></div>
+                        <div class="form-group"><label>Email Used</label><input type="email" id="hd-track-email" required></div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary magnetic">Track Ticket</button>
+                </form>
+                <div id="hd-track-result" class="hd-track-result"></div>
+            </div>
+        </section>
+
+        <!-- Professional Contact Centre -->
+        <section id="contact" class="contact-section container">
+            <div class="section-header">
+                <span class="sub-title">Get in Touch</span>
+                <h2 class="section-title">Initiate a Strategic Collaboration</h2>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-sidebar">
+                    <div class="contact-card glass-card">
+                        <h3>Direct Channels</h3>
+                        <div class="contact-channel">
+                            <div class="channel-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div class="channel-info">
+                                <span class="channel-label">Personal Line</span>
+                                <a href="tel:0203877415" id="contact-personal-phone" class="channel-value">0203877415</a>
+                            </div>
+                        </div>
+                        <div class="contact-channel">
+                            <div class="channel-icon"><i class="fa-solid fa-briefcase"></i></div>
+                            <div class="channel-info">
+                                <span class="channel-label">Business Operations</span>
+                                <a href="tel:0542826112" id="contact-business-phone" class="channel-value">0542826112</a>
+                            </div>
+                        </div>
+                        <div class="contact-channel">
+                            <div class="channel-icon"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="channel-info">
+                                <span class="channel-label">Communications Hub</span>
+                                <a href="mailto:kandyservices5@gmail.com" id="contact-email" class="channel-value">kandyservices5@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-channel" id="contact-linkedin-row">
+                            <div class="channel-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+                            <div class="channel-info">
+                                <span class="channel-label">LinkedIn Networking</span>
+                                <a href="https://www.linkedin.com/in/andrew-akuayi/" target="_blank" rel="noopener" id="contact-linkedin" class="channel-value">linkedin.com/in/andrew-akuayi</a>
+                            </div>
+                        </div>
+                        <div class="contact-channel">
+                            <div class="channel-icon"><i class="fa-solid fa-share-nodes"></i></div>
+                            <div class="channel-info">
+                                <span class="channel-label">Follow Along</span>
+                                <div class="contact-social-row" data-social-target></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="office-hours glass-card">
+                        <h3>Operating Hours (GMT)</h3>
+                        <ul>
+                            <li><span>Monday – Friday:</span> <span id="hours-weekday">08:00 AM – 06:00 PM</span></li>
+                            <li><span>Saturday:</span> <span id="hours-saturday">09:00 AM – 04:00 PM</span></li>
+                            <li><span>Sunday:</span> <span id="hours-sunday">Consultations only</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="contact-form-container glass-card">
+                    <form id="portfolio-contact-form" class="interactive-form" autocomplete="on">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="form-name">Name *</label>
+                                <input type="text" id="form-name" required placeholder="Jane Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="form-email">Email Address *</label>
+                                <input type="email" id="form-email" required placeholder="jane@example.com">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="form-company">Company</label>
+                                <input type="text" id="form-company" placeholder="Acme Corporation">
+                            </div>
+                            <div class="form-group">
+                                <label for="form-phone">Phone Number</label>
+                                <input type="tel" id="form-phone" placeholder="0542826112">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="form-project">Project Type</label>
+                                <select id="form-project" aria-label="Select Project Type">
+                                    <option value="web-dev">Web Architecture Development</option>
+                                    <option value="ai-consulting">AI & Automation Consulting</option>
+                                    <option value="it-support">IT / Network Security Support</option>
+                                    <option value="other">Bespoke Strategic Inquiry</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-budget">Budget Scale (USD)</label>
+                                <select id="form-budget" aria-label="Select Budget Scale">
+                                    <option value="1k-5k">$1,000 – $5,000</option>
+                                    <option value="5k-10k">$5,000 – $10,000</option>
+                                    <option value="10k-plus">$10,000+</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="form-message">Detailed Mission Requirements *</label>
+                            <textarea id="form-message" rows="5" required placeholder="Describe goals, timelines, and technical prerequisites..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full magnetic">
+                            <i class="fa-solid fa-paper-plane"></i> Transmit Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Persistent Floating WhatsApp Button -->
+    <a href="https://wa.me/233542826112?text=Hello%20Kandy%20Services%2C%20I%20would%20like%20to%20discuss%20a%20project%20with%20you." 
+       id="whatsapp-float-btn"
+       class="whatsapp-pulse-btn" 
+       target="_blank" 
+       rel="noopener" 
+       aria-label="Direct encrypted conversation on WhatsApp">
+        <span class="pulse-ring"></span>
+        <i class="fa-brands fa-whatsapp"></i>
+        <div class="wa-tooltip">Direct Comms Online</div>
+    </a>
+
+    <!-- Footer System -->
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand-column">
+                <span class="logo-text">KANDY<span class="accent-dot">.</span></span>
+                <p class="footer-desc">
+                    Designing hyper-fast modern interfaces, executing prompt optimizations, and establishing operational structure for clients globally.
+                </p>
+                <div class="footer-social-icons" data-social-target>
+                    <a href="https://www.linkedin.com/in/andrew-akuayi/" target="_blank" rel="noopener" aria-label="LinkedIn Profile" class="magnetic"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://github.com/andrew-akuayi" target="_blank" rel="noopener" aria-label="GitHub Profile" class="magnetic"><i class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-links-column">
+                <h4>System Directories</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home Base</a></li>
+                    <li><a href="#about">The Architect</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#projects">Project Deck</a></li>
+                    <li><a href="#tech-hub">Tech Hub</a></li>
+                </ul>
+            </div>
+            <div class="footer-newsletter-column">
+                <h4>Newsletter Subscription</h4>
+                <p>Acquire tactical intelligence, development logs, and digital automation case studies directly to your inbox.</p>
+                <form class="newsletter-form" id="newsletter-form">
+                    <input type="email" id="news-email" required placeholder="secure-terminal@domain.com" aria-label="Email Input">
+                    <button type="submit" aria-label="Subscribe"><i class="fa-solid fa-arrow-right-long"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom container">
+            <p>&copy; 2026 Kandy Services. Built with Vanilla JS & WebGL. All rights reserved.</p>
+            <button id="back-to-top" class="back-to-top" aria-label="Back to Top"><i class="fa-solid fa-arrow-up"></i></button>
+        </div>
+    </footer>
+
+    <!-- CDN Script Implementations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
