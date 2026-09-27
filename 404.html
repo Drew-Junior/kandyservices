@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | Kandy Services</title>
+    <meta name="description" content="The page you're looking for doesn't exist or has moved.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://YOUR-DOMAIN-HERE.com/404.html">
+
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="apple-touch-icon" href="favicon-180.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .error-page-wrap {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .error-code {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: clamp(4rem, 12vw, 8rem);
+            line-height: 1;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        .error-title { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 0.75rem; }
+        .error-desc { color: var(--text-secondary); max-width: 460px; margin-bottom: 2rem; }
+        .error-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    </style>
+</head>
+<body>
+    <div class="error-page-wrap">
+        <div class="error-code">404</div>
+        <h1 class="error-title">Page Not Found</h1>
+        <p class="error-desc">The page you're looking for doesn't exist, may have been moved, or the link might be outdated.</p>
+        <div class="error-actions">
+            <a href="index.html" class="btn btn-primary"><i class="fa-solid fa-house"></i> Back to Home</a>
+            <a href="index.html#tech-hub" class="btn btn-secondary"><i class="fa-solid fa-newspaper"></i> Visit Tech Hub</a>
+            <a href="index.html#help-desk" class="btn btn-secondary"><i class="fa-solid fa-headset"></i> Help Desk</a>
+        </div>
+    </div>
+</body>
+</html>

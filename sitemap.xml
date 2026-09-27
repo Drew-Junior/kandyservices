@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Only static pages are listed here. Individual blog articles
+  (post.html?slug=...) aren't included because this is a static site with
+  no build step to auto-generate them — add a <url> block per published
+  article manually, following the commented example below, whenever you
+  publish a new one.
+
+  <url>
+    <loc>https://YOUR-DOMAIN-HERE.com/post.html?slug=your-article-slug</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://YOUR-DOMAIN-HERE.com/</loc>
+        <lastmod>2026-09-26</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+</urlset>
